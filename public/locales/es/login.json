@@ -1,0 +1,12 @@
+{
+    "title": "Iniciar Sesión",
+    "enterEmail": "Ingresa tu correo electrónico para iniciar sesión",
+    "placeholderEmail": "m@example.com",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "rememberMe": "Recordarme",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signIn": "Iniciar Sesión",
+    "noAccount": "¿No tienes una cuenta?",
+    "createAccount": "Crear cuenta"
+  } 

@@ -1,0 +1,11 @@
+{
+  "title": "Create Account",
+  "enterEmail": "Enter your details below to create your account",
+  "placeholderEmail": "m@example.com",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "createAccount": "Create Account",
+  "haveAccount": "Already have an account?",
+  "signIn": "Sign in"
+} 

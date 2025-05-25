@@ -1,0 +1,12 @@
+{
+  "title": "Sign In",
+  "enterEmail": "Enter your email below to sign in to your account",
+  "placeholderEmail": "m@example.com",
+  "email": "Email",
+  "password": "Password",
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "signIn": "Sign In",
+  "noAccount": "Don't have an account?",
+  "createAccount": "Create account"
+} 
