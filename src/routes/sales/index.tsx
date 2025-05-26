@@ -1,3 +1,4 @@
+import { RootLayout } from '@/components/layouts/RootLayout'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/sales/')({
@@ -5,5 +6,9 @@ export const Route = createFileRoute('/sales/')({
 })
 
 function Sales() {
-  return <div>Hello "/sales/"!</div>
+  return (
+    <RootLayout>
+      <div>Hello "/sales/"!</div>
+    </RootLayout>
+  )
 }

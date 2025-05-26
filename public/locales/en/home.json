@@ -1,0 +1,19 @@
+{
+  "welcome": "Welcome to Stellaris Inventory",
+  "description": "Manage your inventory with ease and efficiency",
+  "products": {
+    "title": "Products",
+    "description": "View and manage your product catalog",
+    "view": "View Products"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "description": "Track your stock levels and movements",
+    "view": "View Inventory"
+  },
+  "reports": {
+    "title": "Reports",
+    "description": "Generate insights and analytics",
+    "view": "View Reports"
+  }
+} 

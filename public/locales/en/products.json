@@ -1,0 +1,21 @@
+{
+  "title": "Products",
+  "description": "View and manage your product inventory",
+  "name": "Name",
+  "price": "Price",
+  "actions": "Actions",
+  "viewDetails": "View Details",
+  "addProduct": "Add Product",
+  "productDetails": "Product Details",
+  "edit": "Edit",
+  "delete": "Delete",
+  "id": "Product ID",
+  "addProductDescription": "Add a new product to your inventory",
+  "namePlaceholder": "Enter product name",
+  "pricePlaceholder": "Enter product price",
+  "nameRequired": "Name is required",
+  "priceRequired": "Price is required",
+  "invalidPrice": "Please enter a valid price",
+  "adding": "Adding...",
+  "add": "Add Product"
+} 

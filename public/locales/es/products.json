@@ -1,0 +1,21 @@
+{
+  "title": "Productos",
+  "description": "Ver y gestionar tu inventario de productos",
+  "name": "Nombre",
+  "price": "Precio",
+  "actions": "Acciones",
+  "viewDetails": "Ver Detalles",
+  "addProduct": "Agregar Producto",
+  "productDetails": "Detalles del Producto",
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "id": "ID del Producto",
+  "addProductDescription": "Agregar un nuevo producto al inventario",
+  "namePlaceholder": "Ingresa el nombre del producto",
+  "pricePlaceholder": "Ingresa el precio del producto",
+  "nameRequired": "El nombre es requerido",
+  "priceRequired": "El precio es requerido",
+  "invalidPrice": "Por favor ingresa un precio válido",
+  "adding": "Agregando...",
+  "add": "Agregar Producto"
+} 
