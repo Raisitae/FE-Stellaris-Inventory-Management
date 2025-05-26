@@ -1,3 +1,4 @@
+import { RootLayout } from '@/components/layouts/RootLayout'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/backup/')({
@@ -5,5 +6,9 @@ export const Route = createFileRoute('/backup/')({
 })
 
 function Backup() {
-  return <div>Hello "/backup/"!</div>
+  return (
+    <RootLayout>
+      <div>Hello "/backup/"!</div>
+    </RootLayout>
+  )
 }

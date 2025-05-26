@@ -1,9 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
+import ProductAddForm from '@/components/ProductAddForm/ProductAddForm'
+import { RootLayout } from '@/components/layouts/RootLayout'
 
 export const Route = createFileRoute('/products/add/')({
-  component: RouteComponent,
+  component: AddProduct,
 })
 
-function RouteComponent() {
-  return <div>Hello "/products/add/"!</div>
+function AddProduct() {
+  return (
+    <RootLayout>
+      <div className="container mx-auto py-8">
+        <ProductAddForm />
+      </div>
+    </RootLayout>
+  )
 }
