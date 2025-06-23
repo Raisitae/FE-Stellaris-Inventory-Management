@@ -52,13 +52,23 @@ export function DataTable<TData, TValue>({
     <>
       <Card className="bg-card text-card-foreground">
         <CardHeader>
-          <div>
-            <CardTitle className="text-2xl font-bold">
-              {t("title", "Products")}
-            </CardTitle>
-            <CardDescription className="mt-1">
-              {t("description", "View and manage your product inventory")}
-            </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-2xl font-bold">
+                {t("title", "Products")}
+              </CardTitle>
+              <CardDescription className="mt-1">
+                {t("description", "View and manage your product inventory")}
+              </CardDescription>
+            </div>
+            <Button
+              variant="default"
+              size="icon"
+              className="rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold shadow-md"
+              aria-label={t("addProduct", "Add Product")}
+              onClick={() => window.location.assign("/products/add")}>
+              <span className="leading-none">+</span>
+            </Button>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
