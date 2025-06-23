@@ -29,8 +29,7 @@ export const columns: ColumnDef<Product>[] = [
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
@@ -54,6 +53,7 @@ export const columns: ColumnDef<Product>[] = [
     id: "actions",
     cell: ({ row }) => {
       const product = row.original;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const navigate = useNavigate();
 
       return (
@@ -68,15 +68,13 @@ export const columns: ColumnDef<Product>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product.id)}
-            >
+              onClick={() => navigator.clipboard.writeText(product.id)}>
               Copy product ID
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 navigate({ to: "/products/$id", params: { id: product.id } })
-              }
-            >
+              }>
               View product details
             </DropdownMenuItem>
           </DropdownMenuContent>

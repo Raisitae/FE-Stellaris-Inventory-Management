@@ -1,13 +1,10 @@
-// lib/query/hooks/useProductMutations.ts
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putProduct, deleteProduct } from "../services/productService";
-import type { Product, ProductFormData } from "@/interfaces/product";
+import type { ProductFormData } from "@/interfaces/product";
 import { API_BASE_URL } from "@/lib/config";
 
 export function usePostProduct() {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error, data } = useMutation({
+  const { mutate, isPending, error, data, isSuccess } = useMutation({
     mutationFn: (newProduct: ProductFormData) =>
       fetch(`${API_BASE_URL}/products`, {
         method: "POST",
@@ -20,28 +17,52 @@ export function usePostProduct() {
     },
   });
 
-  return { mutate, isPending, error, data };
+  return { mutate, isPending, error, data, isSuccess };
 }
 
 export function usePutProduct() {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: ({ id, product }: { id: string; product: Product }) =>
-      putProduct(id, product),
+  const { mutate, isPending, error, data, isSuccess } = useMutation({
+    mutationFn: ({
+      id,
+      newProduct,
+    }: {
+      id: string;
+      newProduct: ProductFormData;
+    }) =>
+      fetch(`${API_BASE_URL}/products/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      }).then((res) => res.json()),
+    mutationKey: ["products"],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
+
+  return { mutate, isPending, error, data, isSuccess };
 }
 
 export function useDeleteProduct() {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: deleteProduct,
+  const { isPending, mutate, error, data, isSuccess } = useMutation({
+    mutationFn: (id: string) =>
+      fetch(`${API_BASE_URL}/products/${id}`, {
+        method: "DELETE",
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error("Error deleting product");
+        }
+        return res.json();
+      }),
+    mutationKey: ["products"],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
+
+  return { isPending, mutate, error, data, isSuccess };
 }

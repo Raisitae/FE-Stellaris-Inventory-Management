@@ -6,6 +6,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 export default function ProductList2() {
   const { data } = useProductsQuery();
+  console.log(data);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

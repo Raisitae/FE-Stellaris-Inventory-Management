@@ -22,7 +22,12 @@ export default function ProductAddForm() {
 
   const categoryArray = getCategoryArray(t);
   const statusArray = getStatusArray(t);
-  const { mutate: createProduct, isPending } = usePostProduct();
+  const {
+    mutate: createProduct,
+    isPending,
+    isSuccess,
+    data,
+  } = usePostProduct();
   const { data: platformArray } = usePlatformsQuery();
 
   console.log("Platform Array:", platformArray);
@@ -95,6 +100,9 @@ export default function ProductAddForm() {
       status: formData.status,
       internCode: formData.internCode,
     });
+
+    console.log(`/products/${data._id}`);
+    if (isSuccess) window.location.href = `/products/${data._id}`;
   };
 
   // Update handleChange to support select elements

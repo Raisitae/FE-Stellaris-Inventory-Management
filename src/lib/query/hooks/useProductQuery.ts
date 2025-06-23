@@ -1,48 +1,33 @@
+import { API_BASE_URL } from "@/lib/config";
 import { useQuery } from "@tanstack/react-query";
-import { getProduct, getProducts } from "../services/productService";
 
-/**
- * Custom React Query hook to fetch a product by its ID.
- *
- * @param id - The unique identifier of the product to fetch.
- * @returns The result of the `useQuery` hook for the specified product.
- *
- * @remarks
- * - Retries the query once on failure.
- * - The fetched data is considered fresh for 5 minutes.
- * - Uses the query key `["product", id]` for caching and refetching.
- */
-export function useProductMutations(id: string) {
-  return useQuery({
+export function useProductQuery(id: string) {
+  const { isPending, error, data } = useQuery({
     queryKey: ["product", id],
-    queryFn: () => getProduct(id),
+    queryFn: () =>
+      fetch(`${API_BASE_URL}/products/${id}`).then((res) => res.json()),
     retry: 1, // Retry once on failure
     staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
   });
+
+  return {
+    isPending,
+    error,
+    data,
+  };
 }
 
-/**
- * Custom React Query hook to fetch all products.
- *
- * @returns {UseQueryResult<Product[], Error>} The result object from the `useQuery` hook,
- * containing product data, loading, and error states.
- *
- * @remarks
- * - Uses the query key `["products"]` to cache and identify the query.
- * - Fetches product data using the `getProducts` function.
- * - Retries the query once upon failure.
- * - Marks the data as fresh for 5 minutes (`staleTime`).
- *
- * @example
- * ```tsx
- * const { data, isLoading, error } = useProductsQuery();
- * ```
- */
 export function useProductsQuery() {
-  return useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getProducts(),
+    queryFn: () => fetch(`${API_BASE_URL}/products`).then((res) => res.json()),
     retry: 1, // Retry once on failure
     staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
   });
+
+  return {
+    isPending,
+    error,
+    data,
+  };
 }
