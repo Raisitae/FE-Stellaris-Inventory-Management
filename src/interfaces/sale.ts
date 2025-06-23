@@ -14,8 +14,8 @@ export interface SaleItem {
 }
 
 export interface SaleFormData {
-  date: Date;
   total: number;
+  clientName: string;
   products: SaleItemFormData[];
 }
 

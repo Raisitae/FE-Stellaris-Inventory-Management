@@ -56,5 +56,11 @@
   "categoryConsoles": "Consoles",
   "categoryAccessories": "Accessories",
   "categoryMerchandise": "Merchandise",
-  "categoryOther": "Other"
+  "categoryOther": "Other",
+  "noResults": "No products found",
+  "createSale": "Create Sale",
+  "next": "Next",
+  "previous": "Previous",
+  "of": "of",
+  "selectedRows": "row(s) selected."
 }

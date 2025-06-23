@@ -56,5 +56,11 @@
   "categoryConsoles": "Consolas",
   "categoryAccessories": "Accesorios",
   "categoryMerchandise": "Merchandising",
-  "categoryOther": "Otros"
+  "categoryOther": "Otros",
+  "noResults": "No se encontraron productos",
+  "createSale": "Crear Venta",
+  "next": "Siguiente",
+  "previous": "Anterior",
+  "of": "de ",
+  "selectedRows": " fila(s) seleccionadas"
 }

@@ -41,32 +41,42 @@ export const columns: ColumnDef<Product>[] = [
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "clientName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Price
+          Client Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("price"));
+      const clientName = row.getValue("clientName");
+      return (
+        <div className="text-left">
+          {typeof clientName === "string" && clientName.trim() !== ""
+            ? clientName
+            : null}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "total",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Total Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("total"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -76,89 +86,68 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: "stock",
+    accessorKey: "date",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Stock
+          Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      return <div className="text-right">{row.getValue("stock")}</div>;
+      const dateValue = row.getValue("date");
+      const isValidDateInput =
+        typeof dateValue === "string" ||
+        typeof dateValue === "number" ||
+        dateValue instanceof Date;
+      const date = isValidDateInput
+        ? new Date(dateValue as string | number | Date)
+        : null;
+      const formattedDate = date
+        ? date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })
+        : "";
+      return <div className="text-right">{formattedDate}</div>;
     },
   },
   {
-    accessorKey: "category",
+    accessorKey: "products",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Category
+          Products Quantity
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      return <div className="text-left">{row.getValue("category")}</div>;
-    },
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
+      const products = row.getValue("products") as Array<{
+        name: string;
+        quantity: number;
+        unitPrice: number;
+      }>;
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="text-left">
+          {products.reduce(
+            (total, product) => total + (product.quantity || 0),
+            0
+          )}
+        </div>
       );
-    },
-    cell: ({ row }) => {
-      return <div className="text-left">{row.getValue("status")}</div>;
-    },
-  },
-  {
-    accessorKey: "platformId",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Platform
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return <div className="text-left">{row.getValue("platformId")}</div>;
-    },
-  },
-  {
-    accessorKey: "internCode",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Internal Code
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return <div className="text-left">{row.getValue("internCode")}</div>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const product = row.original;
+      const sales = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const navigate = useNavigate();
 
@@ -174,14 +163,14 @@ export const columns: ColumnDef<Product>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product._id)}>
+              onClick={() => navigator.clipboard.writeText(sales._id)}>
               Copy product ID
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
-                navigate({ to: "/products/$id", params: { id: product._id } })
+                navigate({ to: "/sales/$id", params: { id: sales._id } })
               }>
-              View product details
+              View sale details
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

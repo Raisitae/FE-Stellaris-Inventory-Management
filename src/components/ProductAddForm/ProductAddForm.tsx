@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ import { usePostProduct } from "@/lib/query/hooks/useProductMutation";
 import { usePlatformsQuery } from "@/lib/query/hooks/usePlatformQuery";
 import type { Platform } from "@/interfaces/platform";
 import type { ProductFormData } from "@/interfaces/product";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductAddForm() {
   const { t } = useTranslation("products");
@@ -29,6 +30,7 @@ export default function ProductAddForm() {
     data,
   } = usePostProduct();
   const { data: platformArray } = usePlatformsQuery();
+  const navigate = useNavigate();
 
   console.log("Platform Array:", platformArray);
   const [formData, setFormData] = useState<ProductFormData>({
@@ -100,10 +102,13 @@ export default function ProductAddForm() {
       status: formData.status,
       internCode: formData.internCode,
     });
-
-    console.log(`/products/${data._id}`);
-    if (isSuccess) window.location.href = `/products/${data._id}`;
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`/products/${data._id}`);
+    }
+  }, [isSuccess, navigate, data]);
 
   // Update handleChange to support select elements
   const handleChange = (
@@ -246,7 +251,6 @@ export default function ProductAddForm() {
             )}
           </div>
 
-          {/* Status Select */}
           <div className="space-y-2">
             <Label htmlFor="status">{t("status")}</Label>
             <select
