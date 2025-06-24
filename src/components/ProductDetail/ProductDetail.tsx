@@ -1,14 +1,24 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useGetProductById } from "../../queries/getProductById";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
+import { useProductQuery } from "@/lib/query/hooks/useProductQuery";
 
 const ProductDetail = () => {
-  const { data, isLoading, error } = useGetProductById();
+  const location = useLocation();
+  const trimmedPath = location.pathname.replace(/^\/products\//, "");
+  const id = trimmedPath.split("/")[0];
+
+  const { data, isLoading, error } = useProductQuery(id);
   const navigate = useNavigate();
   const { t } = useTranslation("products");
 
@@ -30,25 +40,26 @@ const ProductDetail = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => navigate({ to: '/products' })}
+                  onClick={() => navigate({ to: "/products" })}
                   className="cursor-pointer"
-                >
+                  aria-label={t("back", "Go back")}>
                   <ArrowLeft className="h-4 w-4" />
                 </Button>
-                <div>
-                  <CardTitle className="text-2xl font-bold">{data?.name}</CardTitle>
-                  <CardDescription className="mt-1">
-                    {t("productDetails", "Product Details")}
-                  </CardDescription>
-                </div>
+                <CardTitle className="text-2xl font-bold">
+                  {data?.name}
+                </CardTitle>
               </div>
               <div className="flex gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => navigate({ to: '/products/$id', params: { id: data?.id } })}
-                  className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                >
+                  onClick={() =>
+                    navigate({
+                      to: "/products/$id",
+                      params: { id: data?._id || "" },
+                    })
+                  }
+                  className="cursor-pointer hover:bg-accent hover:text-accent-foreground">
                   <Edit className="mr-2 h-4 w-4" />
                   {t("edit", "Edit")}
                 </Button>
@@ -57,25 +68,84 @@ const ProductDetail = () => {
                   size="sm"
                   onClick={() => {
                     // TODO: Implement delete functionality
-                    console.log('Delete product:', data?.id);
+                    console.log("Delete product:", data?._id);
                   }}
-                  className="cursor-pointer"
-                >
+                  className="cursor-pointer">
                   <Trash2 className="mr-2 h-4 w-4" />
                   {t("delete", "Delete")}
                 </Button>
               </div>
             </div>
+
+            <CardDescription className="mb-4">
+              {data?.description ||
+                t("noDescription", "No description available.")}
+            </CardDescription>
           </CardHeader>
+
           <CardContent>
-            <div className="grid gap-6">
-              <div className="grid gap-2">
-                <h3 className="text-lg font-medium text-muted-foreground">{t("price", "Price")}</h3>
-                <p className="text-2xl font-bold">${data?.price.toFixed(2)}</p>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">
+                    {t("price", "Price")}
+                  </h3>
+                  <p className="text-2xl font-bold">
+                    ${data?.price.toFixed(2)}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">
+                    {t("category", "Category")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {data?.category}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">
+                    {t("platformId", "Platform ID")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {data?.platformId}
+                  </p>
+                </div>
               </div>
-              <div className="grid gap-2">
-                <h3 className="text-lg font-medium text-muted-foreground">{t("id", "Product ID")}</h3>
-                <p className="text-sm text-muted-foreground">{data?.id}</p>
+
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">
+                    {t("stock", "Stock")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{data?.stock}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">
+                    {t("status", "Status")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {data?.status}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">
+                    {t("internCode", "Internal Code")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {data?.internCode}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">
+                    {t("productId", "Product ID")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{data?._id}</p>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -85,4 +155,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail; 
+export default ProductDetail;

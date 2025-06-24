@@ -15,9 +15,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { Product } from "@/interfaces/product";
+import type { Sale } from "@/interfaces/sale";
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Sale>[] = [
   {
     id: "select",
     header: ({ table }) => (

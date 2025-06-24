@@ -2,7 +2,7 @@ import { API_BASE_URL } from "@/lib/config";
 import { useQuery } from "@tanstack/react-query";
 
 export function useSaleQuery(id: string) {
-  const { data, error, isPending, isSuccess } = useQuery({
+  const { data, error, isPending, isSuccess, isLoading } = useQuery({
     queryKey: ["sales", id],
     queryFn: () =>
       fetch(`${API_BASE_URL}/sales/${id}`).then((res) => {
@@ -12,9 +12,11 @@ export function useSaleQuery(id: string) {
         return res.json();
       }),
     retry: 1, // Retry once on failure
-    staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
+    staleTime: 0, // Always stale
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
-  return { data, error, isPending, isSuccess };
+  return { data, error, isPending, isSuccess, isLoading };
 }
 
 export function useSalesQuery() {

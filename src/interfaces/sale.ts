@@ -1,12 +1,13 @@
 export interface Sale {
-  id: string;
+  _id: string;
   date: Date;
   total: number;
   products: SaleItem[];
+  [key: string]: unknown;
 }
 
 export interface SaleItem {
-  id: string;
+  _id: string;
   saleId: string;
   productId: string;
   quantity: number;
