@@ -11,7 +11,7 @@ export default function ProductList2() {
     <Suspense fallback={<div>Loading...</div>}>
       <ErrorBoundary fallback={<div>Error loading products</div>}>
         <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={data || []} />
+          <DataTable columns={columns} data={Array.isArray(data) ? data : []} />
         </div>
       </ErrorBoundary>
     </Suspense>

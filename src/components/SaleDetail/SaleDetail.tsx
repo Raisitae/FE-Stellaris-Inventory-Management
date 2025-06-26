@@ -1,7 +1,7 @@
 import { useSaleWithProducts } from "@/lib/query/hooks/useProductQuery";
 import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+//mport { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -18,7 +18,7 @@ const SaleDetail = () => {
   const location = useLocation();
   const trimmedPath = location.pathname.replace(/^\/sales\//, "");
   const id = trimmedPath.split("/")[0];
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const { t } = useTranslation("sales");
 
@@ -39,7 +39,7 @@ const SaleDetail = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate("/sales")}
+                onClick={() => (window.location.href = `/sales/`)}
                 aria-label={t("back", "Go back")}>
                 <ArrowLeft className="h-4 w-4" />
               </Button>

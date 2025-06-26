@@ -29,32 +29,37 @@ function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg  p-6 text-center border border-blue-200">
             <h2 className="text-2xl font-semibold mb-2 text-blue-700">
-              {t("feature1Title", "Inventory Tracking")}
+              {t("feature1Title", "Seguimiento de Inventario")}
             </h2>
             <p className="text-gray-700">
               {t(
                 "feature1Desc",
-                "Easily manage and track your items in real time."
+                "Administra tu inventario de manera eficiente y sencilla."
               )}
             </p>
           </div>
+
           <div className="bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg p-6 text-center border border-purple-200">
             <h2 className="text-2xl font-semibold mb-2 text-purple-700">
-              {t("feature2Title", "Analytics & Reports")}
+              {t("feature2Title", "Seguimiento de Ventas")}
             </h2>
             <p className="text-gray-700">
               {t(
                 "feature2Desc",
-                "Gain insights with powerful analytics and reporting tools."
+                "Analiza tus ventas y toma decisiones informadas."
               )}
             </p>
           </div>
+
           <div className="bg-gradient-to-br from-pink-100 to-pink-50 rounded-lg p-6 text-center border border-pink-200">
             <h2 className="text-2xl font-semibold mb-2 text-pink-700">
-              {t("feature3Title", "Collaboration")}
+              {t("feature3Title", "Exportación de Datos")}
             </h2>
             <p className="text-gray-700">
-              {t("feature3Desc", "Work together with your team seamlessly.")}
+              {t(
+                "feature3Desc",
+                "Exporta tus datos en formatos comunes como CSV y PDF para un análisis más profundo o informes profesionales."
+              )}
             </p>
           </div>
         </div>

@@ -3,10 +3,10 @@ import SalesList from "@/components/SalesList/SalesList";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/sales/")({
-  component: Products,
+  component: Sales,
 });
 
-function Products() {
+function Sales() {
   return (
     <RootLayout>
       <div className="container mx-auto py-8">

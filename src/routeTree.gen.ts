@@ -13,7 +13,6 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as SalesIndexImport } from './routes/sales/index'
-import { Route as ReportsIndexImport } from './routes/reports/index'
 import { Route as RegisterIndexImport } from './routes/register/index'
 import { Route as ProductsIndexImport } from './routes/products/index'
 import { Route as LoginIndexImport } from './routes/login/index'
@@ -22,6 +21,7 @@ import { Route as SalesIdImport } from './routes/sales/$id'
 import { Route as ProductsIdImport } from './routes/products/$id'
 import { Route as SalesAddIndexImport } from './routes/sales/add/index'
 import { Route as ProductsAddIndexImport } from './routes/products/add/index'
+import { Route as ProductsEditIdImport } from './routes/products/edit/$id'
 
 // Create/Update Routes
 
@@ -34,12 +34,6 @@ const IndexRoute = IndexImport.update({
 const SalesIndexRoute = SalesIndexImport.update({
   id: '/sales/',
   path: '/sales/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ReportsIndexRoute = ReportsIndexImport.update({
-  id: '/reports/',
-  path: '/reports/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -88,6 +82,12 @@ const SalesAddIndexRoute = SalesAddIndexImport.update({
 const ProductsAddIndexRoute = ProductsAddIndexImport.update({
   id: '/products/add/',
   path: '/products/add/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductsEditIdRoute = ProductsEditIdImport.update({
+  id: '/products/edit/$id',
+  path: '/products/edit/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -144,18 +144,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterIndexImport
       parentRoute: typeof rootRoute
     }
-    '/reports/': {
-      id: '/reports/'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsIndexImport
-      parentRoute: typeof rootRoute
-    }
     '/sales/': {
       id: '/sales/'
       path: '/sales'
       fullPath: '/sales'
       preLoaderRoute: typeof SalesIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/products/edit/$id': {
+      id: '/products/edit/$id'
+      path: '/products/edit/$id'
+      fullPath: '/products/edit/$id'
+      preLoaderRoute: typeof ProductsEditIdImport
       parentRoute: typeof rootRoute
     }
     '/products/add/': {
@@ -185,8 +185,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginIndexRoute
   '/products': typeof ProductsIndexRoute
   '/register': typeof RegisterIndexRoute
-  '/reports': typeof ReportsIndexRoute
   '/sales': typeof SalesIndexRoute
+  '/products/edit/$id': typeof ProductsEditIdRoute
   '/products/add': typeof ProductsAddIndexRoute
   '/sales/add': typeof SalesAddIndexRoute
 }
@@ -199,8 +199,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginIndexRoute
   '/products': typeof ProductsIndexRoute
   '/register': typeof RegisterIndexRoute
-  '/reports': typeof ReportsIndexRoute
   '/sales': typeof SalesIndexRoute
+  '/products/edit/$id': typeof ProductsEditIdRoute
   '/products/add': typeof ProductsAddIndexRoute
   '/sales/add': typeof SalesAddIndexRoute
 }
@@ -214,8 +214,8 @@ export interface FileRoutesById {
   '/login/': typeof LoginIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/register/': typeof RegisterIndexRoute
-  '/reports/': typeof ReportsIndexRoute
   '/sales/': typeof SalesIndexRoute
+  '/products/edit/$id': typeof ProductsEditIdRoute
   '/products/add/': typeof ProductsAddIndexRoute
   '/sales/add/': typeof SalesAddIndexRoute
 }
@@ -230,8 +230,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/products'
     | '/register'
-    | '/reports'
     | '/sales'
+    | '/products/edit/$id'
     | '/products/add'
     | '/sales/add'
   fileRoutesByTo: FileRoutesByTo
@@ -243,8 +243,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/products'
     | '/register'
-    | '/reports'
     | '/sales'
+    | '/products/edit/$id'
     | '/products/add'
     | '/sales/add'
   id:
@@ -256,8 +256,8 @@ export interface FileRouteTypes {
     | '/login/'
     | '/products/'
     | '/register/'
-    | '/reports/'
     | '/sales/'
+    | '/products/edit/$id'
     | '/products/add/'
     | '/sales/add/'
   fileRoutesById: FileRoutesById
@@ -271,8 +271,8 @@ export interface RootRouteChildren {
   LoginIndexRoute: typeof LoginIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
-  ReportsIndexRoute: typeof ReportsIndexRoute
   SalesIndexRoute: typeof SalesIndexRoute
+  ProductsEditIdRoute: typeof ProductsEditIdRoute
   ProductsAddIndexRoute: typeof ProductsAddIndexRoute
   SalesAddIndexRoute: typeof SalesAddIndexRoute
 }
@@ -285,8 +285,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginIndexRoute: LoginIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   RegisterIndexRoute: RegisterIndexRoute,
-  ReportsIndexRoute: ReportsIndexRoute,
   SalesIndexRoute: SalesIndexRoute,
+  ProductsEditIdRoute: ProductsEditIdRoute,
   ProductsAddIndexRoute: ProductsAddIndexRoute,
   SalesAddIndexRoute: SalesAddIndexRoute,
 }
@@ -308,8 +308,8 @@ export const routeTree = rootRoute
         "/login/",
         "/products/",
         "/register/",
-        "/reports/",
         "/sales/",
+        "/products/edit/$id",
         "/products/add/",
         "/sales/add/"
       ]
@@ -335,11 +335,11 @@ export const routeTree = rootRoute
     "/register/": {
       "filePath": "register/index.tsx"
     },
-    "/reports/": {
-      "filePath": "reports/index.tsx"
-    },
     "/sales/": {
       "filePath": "sales/index.tsx"
+    },
+    "/products/edit/$id": {
+      "filePath": "products/edit/$id.tsx"
     },
     "/products/add/": {
       "filePath": "products/add/index.tsx"

@@ -20,7 +20,7 @@ export function useSaleQuery(id: string) {
 }
 
 export function useSalesQuery() {
-  const { data, error, isPending, isSuccess } = useQuery({
+  const { data, error, isPending, isSuccess, isLoading } = useQuery({
     queryKey: ["sales"],
     queryFn: () =>
       fetch(`${API_BASE_URL}/sales`).then((res) => {
@@ -33,5 +33,5 @@ export function useSalesQuery() {
     staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
   });
 
-  return { data, error, isPending, isSuccess };
+  return { data, error, isPending, isSuccess, isLoading };
 }

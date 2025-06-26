@@ -20,7 +20,7 @@ export function usePostProduct() {
   return { mutate, isPending, error, data, isSuccess };
 }
 
-export function usePutProduct() {
+export function usePathProduct() {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, error, data, isSuccess } = useMutation({
@@ -32,7 +32,7 @@ export function usePutProduct() {
       newProduct: ProductFormData;
     }) =>
       fetch(`${API_BASE_URL}/products/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newProduct),
       }).then((res) => res.json()),
@@ -49,8 +49,8 @@ export function useDeleteProduct() {
   const queryClient = useQueryClient();
 
   const { isPending, mutate, error, data, isSuccess } = useMutation({
-    mutationFn: (id: string) =>
-      fetch(`${API_BASE_URL}/products/${id}`, {
+    mutationFn: (idClient: string) =>
+      fetch(`${API_BASE_URL}/products/${idClient}`, {
         method: "DELETE",
       }).then((res) => {
         if (!res.ok) {

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
 import { useProductQuery } from "@/lib/query/hooks/useProductQuery";
+import { useDeleteProduct } from "@/lib/query/hooks/useProductMutation";
 
 const ProductDetail = () => {
   const location = useLocation();
@@ -21,6 +22,24 @@ const ProductDetail = () => {
   const { data, isLoading, error } = useProductQuery(id);
   const navigate = useNavigate();
   const { t } = useTranslation("products");
+  const { mutate, isSuccess } = useDeleteProduct();
+
+  const handleDelete = (id: string) => () => {
+    if (!id) return;
+    if (
+      window.confirm(
+        t("confirmDelete", "Are you sure you want to delete this product?")
+      )
+    ) {
+      mutate(id);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      window.location.href = `/products/`;
+    }
+  }, [isSuccess]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -40,7 +59,7 @@ const ProductDetail = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => navigate({ to: "/products" })}
+                  onClick={() => (window.location.href = `/products/`)}
                   className="cursor-pointer"
                   aria-label={t("back", "Go back")}>
                   <ArrowLeft className="h-4 w-4" />
@@ -55,7 +74,7 @@ const ProductDetail = () => {
                   size="sm"
                   onClick={() =>
                     navigate({
-                      to: "/products/$id",
+                      to: "/products/edit/$id",
                       params: { id: data?._id || "" },
                     })
                   }
@@ -66,10 +85,7 @@ const ProductDetail = () => {
                 <Button
                   variant="destructive"
                   size="sm"
-                  onClick={() => {
-                    // TODO: Implement delete functionality
-                    console.log("Delete product:", data?._id);
-                  }}
+                  onClick={handleDelete(data?._id || "")}
                   className="cursor-pointer">
                   <Trash2 className="mr-2 h-4 w-4" />
                   {t("delete", "Delete")}

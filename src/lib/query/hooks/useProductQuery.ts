@@ -12,6 +12,7 @@ export function useProductQuery(id: string) {
       fetch(`${API_BASE_URL}/products/${id}`).then((res) => res.json()),
     retry: 1, // Retry once on failure
     staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
+    refetchOnMount: true,
   });
 
   return {
@@ -24,7 +25,7 @@ export function useProductQuery(id: string) {
 }
 
 export function useProductsQuery() {
-  const { isPending, error, data } = useQuery<Product>({
+  const { isPending, isLoading, error, data } = useQuery<Product>({
     queryKey: ["products"],
     queryFn: () => fetch(`${API_BASE_URL}/products`).then((res) => res.json()),
     retry: 1, // Retry once on failure
@@ -33,6 +34,7 @@ export function useProductsQuery() {
 
   return {
     isPending,
+    isLoading,
     error,
     data,
   };
