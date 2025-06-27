@@ -1,12 +1,13 @@
 export interface Sale {
-  id: string;
+  _id: string;
   date: Date;
   total: number;
   products: SaleItem[];
+  [key: string]: unknown;
 }
 
 export interface SaleItem {
-  id: string;
+  _id: string;
   saleId: string;
   productId: string;
   quantity: number;
@@ -14,8 +15,8 @@ export interface SaleItem {
 }
 
 export interface SaleFormData {
-  date: Date;
   total: number;
+  clientName: string;
   products: SaleItemFormData[];
 }
 

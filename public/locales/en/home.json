@@ -1,19 +1,11 @@
 {
   "welcome": "Welcome to Stellaris Inventory",
   "description": "Manage your inventory with ease and efficiency",
-  "products": {
-    "title": "Products",
-    "description": "View and manage your product catalog",
-    "view": "View Products"
-  },
-  "inventory": {
-    "title": "Inventory",
-    "description": "Track your stock levels and movements",
-    "view": "View Inventory"
-  },
-  "reports": {
-    "title": "Reports",
-    "description": "Generate insights and analytics",
-    "view": "View Reports"
-  }
-} 
+  "getStarted": "Get Started",
+  "feature1Title": "Easy Inventory Management",
+  "feature1Desc": "Keep track of your stock effortlessly.",
+  "feature2Title": "Sales Tracking",
+  "feature2Desc": "Monitor your sales and make informed decisions.",
+  "feature3Title": "Backup and Restore",
+  "feature3Desc": "Export your data in common formats like CSV and PDF for deeper analysis or professional reports."
+}

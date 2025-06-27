@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,41 +12,60 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getCategoryArray } from "@/data/categories";
 import { getStatusArray } from "@/data/status";
-import { usePostProduct } from "@/lib/query/hooks/useProductMutation";
 import { usePlatformsQuery } from "@/lib/query/hooks/usePlatformQuery";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import type { Platform } from "@/interfaces/platform";
 import type { ProductFormData } from "@/interfaces/product";
-import { useNavigate } from "react-router-dom";
+import { useProductQuery } from "@/lib/query/hooks/useProductQuery";
+import { usePatchProduct } from "@/lib/query/hooks/useProductMutation";
 
-export default function ProductAddForm() {
+export default function ProductEditForm() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const pathSegments = location.pathname.split("/");
+  const id = pathSegments[pathSegments.length - 1];
   const { t } = useTranslation("products");
 
   const categoryArray = getCategoryArray(t);
   const statusArray = getStatusArray(t);
-  const {
-    mutate: createProduct,
-    isPending,
-    isSuccess,
-    data,
-  } = usePostProduct();
-  const { data: platformArray } = usePlatformsQuery();
-  const navigate = useNavigate();
 
-  console.log("Platform Array:", platformArray);
+  const { data: platformArray } = usePlatformsQuery();
+  const { data: product, isLoading } = useProductQuery(id);
+
+  const { mutate: updateProduct, isSuccess, isPending } = usePatchProduct();
+
   const [formData, setFormData] = useState<ProductFormData>({
-    price: 0,
-    description: "",
-    imageUrl: "",
-    category: "",
-    platformId: "",
-    stock: 0,
-    status: "",
-    internCode: "",
-    name: "",
+    price: product?.price || 0,
+    name: product?.name || "",
+    description: product?.description || "",
+    imageUrl: product?.imageUrl || "",
+    category: product?.category || "",
+    platformId: product?.platformId || "",
+    stock: product?.stock || 0,
+    status: product?.status || "",
+    internCode: product?.internCode || "",
   });
+
   const [errors, setErrors] = useState<
     Partial<Record<keyof ProductFormData, string | undefined>>
   >({});
+
+  useEffect(() => {
+    if (product) {
+      setFormData({
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        imageUrl: product.imageUrl,
+        category: product.category,
+        platformId: product.platformId,
+        stock: product.stock,
+        status: product.status,
+        internCode: product.internCode,
+      });
+    }
+  }, [product]);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<
@@ -87,30 +106,21 @@ export default function ProductAddForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!validateForm() || !id) {
       return;
     }
 
-    createProduct({
-      name: formData.name,
-      price: Number(formData.price),
-      description: formData.description,
-      imageUrl: formData.imageUrl || "",
-      category: formData.category.toLowerCase(),
-      platformId: formData.platformId,
-      stock: Number(formData.stock),
-      status: formData.status,
-      internCode: formData.internCode,
+    updateProduct({
+      id,
+      newProduct: {
+        ...formData,
+        price: Number(formData.price),
+        stock: Number(formData.stock),
+        category: formData.category.toLowerCase(),
+      },
     });
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      navigate(`/products/${data._id}`);
-    }
-  }, [isSuccess, navigate, data]);
-
-  // Update handleChange to support select elements
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -127,11 +137,21 @@ export default function ProductAddForm() {
     }
   };
 
+  useEffect(() => {
+    if (isSuccess && id) {
+      console.log(id);
+      window.location.href = `/products/${id}`;
+    }
+  }, [isSuccess, id, navigate]);
+
+  if (isLoading) return <div>{t("loading")}</div>;
+  if (!product) return <div>{t("notFound")}</div>;
+
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>{t("addProduct")}</CardTitle>
-        <CardDescription>{t("addProductDescription")}</CardDescription>
+        <CardTitle>{t("editProduct")}</CardTitle>
+        <CardDescription>{t("editProductDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -142,47 +162,30 @@ export default function ProductAddForm() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder={t("namePlaceholder")}
+              placeholder={product.name}
               className={errors.name ? "border-red-500" : ""}
             />
             {errors.name && (
               <p className="text-sm text-red-500">{errors.name}</p>
             )}
           </div>
+
           <div className="space-y-2">
             <Label htmlFor="price">{t("price")}</Label>
             <Input
               id="price"
               name="price"
               type="number"
-              step="0.01"
-              min="0"
               value={formData.price}
               onChange={handleChange}
-              placeholder={t("pricePlaceholder")}
+              placeholder={product.price?.toString()}
               className={errors.price ? "border-red-500" : ""}
             />
             {errors.price && (
               <p className="text-sm text-red-500">{errors.price}</p>
             )}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="stock">{t("stock")}</Label>
-            <Input
-              id="stock"
-              name="stock"
-              type="number"
-              step="0.01"
-              min="0"
-              value={formData.stock}
-              onChange={handleChange}
-              placeholder={t("stockPlaceholder")}
-              className={errors.stock ? "border-red-500" : ""}
-            />
-            {errors.stock && (
-              <p className="text-sm text-red-500">{errors.stock}</p>
-            )}
-          </div>
+
           <div className="space-y-2">
             <Label htmlFor="description">{t("descriptionForm")}</Label>
             <Input
@@ -190,7 +193,7 @@ export default function ProductAddForm() {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder={t("descriptionPlaceholder")}
+              placeholder={product.description}
               className={errors.description ? "border-red-500" : ""}
             />
             {errors.description && (
@@ -198,7 +201,6 @@ export default function ProductAddForm() {
             )}
           </div>
 
-          {/* Category Select */}
           <div className="space-y-2">
             <Label htmlFor="category">{t("category")}</Label>
             <select
@@ -224,7 +226,6 @@ export default function ProductAddForm() {
             )}
           </div>
 
-          {/* Platform Select */}
           <div className="space-y-2">
             <Label htmlFor="platform">{t("platform")}</Label>
             <select
@@ -252,6 +253,22 @@ export default function ProductAddForm() {
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="stock">{t("stock")}</Label>
+            <Input
+              id="stock"
+              name="stock"
+              type="number"
+              value={formData.stock}
+              onChange={handleChange}
+              placeholder={product.stock?.toString()}
+              className={errors.stock ? "border-red-500" : ""}
+            />
+            {errors.stock && (
+              <p className="text-sm text-red-500">{errors.stock}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
             <Label htmlFor="status">{t("status")}</Label>
             <select
               id="status"
@@ -275,6 +292,7 @@ export default function ProductAddForm() {
               <p className="text-sm text-red-500">{errors.status}</p>
             )}
           </div>
+
           <div className="space-y-2">
             <Label htmlFor="internCode">{t("internCode")}</Label>
             <Input
@@ -282,15 +300,16 @@ export default function ProductAddForm() {
               name="internCode"
               value={formData.internCode}
               onChange={handleChange}
-              placeholder={t("internCodePlaceholder")}
+              placeholder={product.internCode}
               className={errors.internCode ? "border-red-500" : ""}
             />
             {errors.internCode && (
               <p className="text-sm text-red-500">{errors.internCode}</p>
             )}
           </div>
+
           <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? t("adding") : t("add")}
+            {isPending ? t("updating") : t("update", "Update Product")}
           </Button>
         </form>
       </CardContent>

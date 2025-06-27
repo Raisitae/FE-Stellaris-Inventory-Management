@@ -1,0 +1,7 @@
+{
+  "backupTitle": "Backup de Inventario",
+  "backupDescription": "Descarga un respaldo en CSV de todos tus productos y ventas actuales. Puedes usar este archivo para restaurar tu inventario o analizar tus datos fuera de la plataforma.",
+  "backupDownload": "Descargar backup CSV de productos y ventas",
+  "backupLoading": "Cargando datos para backup...",
+  "backupError": "Error cargando productos o ventas."
+}

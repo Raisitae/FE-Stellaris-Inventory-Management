@@ -1,3 +1,5 @@
+//El dia de mañana los estados se pueden obtener de una API, del mismo modo que las plataformas
+
 export const getStatusArray = (t: (key: string) => string) => {
   return [
     { value: "nuevo", label: t("statusNew") },

@@ -1,0 +1,7 @@
+{
+  "backupTitle": "Inventory Backup",
+  "backupDescription": "Download a CSV backup of all your current products and sales. You can use this file to restore your inventory or analyze your data outside the platform.",
+  "backupDownload": "Download CSV backup of products and sales",
+  "backupLoading": "Loading data for backup...",
+  "backupError": "Error loading products or sales."
+}

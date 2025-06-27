@@ -24,8 +24,14 @@ import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { CardContent } from "../ui/card";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useSelectedProducts } from "@/context/SelectedProductsContext";
 import type { Product } from "@/interfaces/product";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import type { Sale } from "@/interfaces/sale";
 interface DataTableProps<TData extends Product, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -36,10 +42,9 @@ export function DataTable<TData extends Product, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const { t } = useTranslation("products");
+  const { t } = useTranslation("sales");
   const [rowSelection, setRowSelection] = React.useState({});
   const navigate = useNavigate();
-  const { addProduct } = useSelectedProducts();
 
   const table = useReactTable({
     data,
@@ -55,14 +60,31 @@ export function DataTable<TData extends Product, TValue>({
     },
   });
 
-  const handleClickSale = () => {
-    const selectedRows = table.getFilteredSelectedRowModel().rows;
-    if (selectedRows.length > 0) {
-      const products = selectedRows.map((row) => row.original);
-      products.forEach((product) => addProduct(product));
-      navigate("/sales/add");
-    }
-  };
+  function handleInvoiceSales(sales: Sale[]) {
+    if (!sales || sales.length === 0) return;
+
+    // Generar CSV
+    const headers = Object.keys(sales[0]);
+    const csvRows = [
+      headers.join(","), // encabezados
+      ...sales.map((sale) =>
+        headers.map((header) => JSON.stringify(sale[header] ?? "")).join(",")
+      ),
+    ];
+    const csvContent = csvRows.join("\n");
+
+    // Descargar archivo
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sales.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <>
       <Card className="bg-card text-card-foreground">
@@ -74,14 +96,22 @@ export function DataTable<TData extends Product, TValue>({
                 {t("description")}
               </CardDescription>
             </div>
-            <Button
-              variant="default"
-              size="icon"
-              className="rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold shadow-md"
-              aria-label={t("addProduct")}
-              onClick={() => navigate("/products/add")}>
-              <span className="leading-none">+</span>
-            </Button>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    className="rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold shadow-md"
+                    aria-label={t("addSale")}
+                    onClick={() => navigate("/products")}>
+                    <span className="leading-none">+</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{t("goToProductsTooltip")}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -146,10 +176,16 @@ export function DataTable<TData extends Product, TValue>({
                 variant="default"
                 size="sm"
                 className="ml-2"
-                onClick={handleClickSale}
+                onClick={() =>
+                  handleInvoiceSales(
+                    table
+                      .getFilteredSelectedRowModel()
+                      .rows.map((row) => row.original as unknown as Sale)
+                  )
+                }
                 disabled={table.getFilteredSelectedRowModel().rows.length === 0}
-                aria-label={t("createSale")}>
-                {t("createSale")}
+                aria-label={t("exportSalesInvoice")}>
+                {t("exportSalesInvoice")}
               </Button>
             </div>
             <Button

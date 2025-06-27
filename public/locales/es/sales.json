@@ -1,0 +1,21 @@
+{
+  "title": "Ventas",
+  "description": "Ver y gestionar tus ventas",
+  "addSale": "Agregar Venta",
+  "goToProductsTooltip": "Ir a la página de productos para seleccionar artículos y comenzar una nueva venta.",
+  "clientName": "Nombre del Cliente",
+  "selectedProducts": "Productos Seleccionados",
+  "noProductsSelected": "No se han seleccionado productos",
+  "totalPrice": "Total: ",
+  "processingSale": "Procesando Venta",
+  "createSale": "Crear Venta",
+  "productRequired": "Debes seleccionar al menos un producto para crear una venta",
+  "invalidQty": "Cantidad inválida",
+  "invalidPrice": "Precio inválido",
+  "clientNameRequired": "El nombre del cliente es obligatorio y debe tener al menos 3 caracteres",
+  "next": "Siguiente",
+  "previous": "Anterior",
+  "exportSalesInvoice": "Exportar Factura de Ventas",
+  "of": "de",
+  "selectedRows": "fila(s) seleccionadas."
+}

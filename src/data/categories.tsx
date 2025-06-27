@@ -1,3 +1,5 @@
+//El día de mañana las categorías se pueden obtener de una API, del mismo modo que las plataformas
+
 export const getCategoryArray = (t: (key: string) => string) => {
   return [
     { value: "juegos", label: t("categoryGames") },

@@ -1,15 +1,16 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useTranslation } from "react-i18next"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 export function LoginForm({
   className,
@@ -41,8 +42,7 @@ export function LoginForm({
                   <Label htmlFor="password">{t("password")}</Label>
                   <a
                     href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
                     {t("forgotPassword")}
                   </a>
                 </div>
@@ -54,13 +54,13 @@ export function LoginForm({
             </div>
             <div className="mt-4 text-center text-sm">
               {t("noAccount")}{" "}
-              <a href="#" className="underline underline-offset-4">
+              <Link to="/register" className="underline underline-offset-4">
                 {t("createAccount")}
-              </a>
+              </Link>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

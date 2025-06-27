@@ -1,0 +1,21 @@
+{
+  "title": "Sales",
+  "description": "View and manage your sales",
+  "addSale": "Add Sale",
+  "goToProductsTooltip": "Go to the products page to select items and start a new sale.",
+  "clientName": "Client Name",
+  "selectedProducts": "Selected Products",
+  "noProductsSelected": "No products selected",
+  "totalPrice": "Total: ",
+  "processingSale": "Processing Sale",
+  "createSale": "Create Sale",
+  "productRequired": "You must select at least one product to create a sale",
+  "invalidQty": "Invalid quantity",
+  "invalidPrice": "Invalid price",
+  "clientNameRequired": "Client name is required and must be at least 3 characters long",
+  "next": "Next",
+  "previous": "Previous",
+  "exportSalesInvoice": "Export Sales Invoice",
+  "of": "of",
+  "selectedRows": "row(s) selected."
+}

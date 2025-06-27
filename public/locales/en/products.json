@@ -56,5 +56,16 @@
   "categoryConsoles": "Consoles",
   "categoryAccessories": "Accessories",
   "categoryMerchandise": "Merchandise",
-  "categoryOther": "Other"
+  "categoryOther": "Other",
+  "noResults": "No products found",
+  "createSale": "Create Sale",
+  "next": "Next",
+  "previous": "Previous",
+  "of": "of",
+  "selectedRows": "row(s) selected.",
+  "editProductDescription": "Edit the details of this product",
+  "updating": "Updating...",
+  "update": "Update Product",
+  "notFound": "Product not found",
+  "loading": "Loading products..."
 }

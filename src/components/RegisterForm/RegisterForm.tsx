@@ -1,15 +1,16 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useTranslation } from "react-i18next"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 export function RegisterForm({
   className,
@@ -22,9 +23,7 @@ export function RegisterForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">{t("title")}</CardTitle>
-          <CardDescription>
-            {t("enterEmail")}
-          </CardDescription>
+          <CardDescription>{t("enterEmail")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
@@ -52,13 +51,13 @@ export function RegisterForm({
             </div>
             <div className="mt-4 text-center text-sm">
               {t("haveAccount")}{" "}
-              <a href="#" className="underline underline-offset-4">
+              <Link to="/login" className="underline underline-offset-4">
                 {t("signIn")}
-              </a>
+              </Link>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

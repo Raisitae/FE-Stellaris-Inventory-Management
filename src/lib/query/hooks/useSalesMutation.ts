@@ -4,15 +4,20 @@ import { API_BASE_URL } from "@/lib/config";
 
 export function usePostSale() {
   const queryClient = useQueryClient();
-  const { isPending, error, data, isSuccess } = useMutation({
+  const { mutate, isPending, error, data, isSuccess } = useMutation({
     mutationKey: ["sales"],
-    mutationFn: () => fetch(`${API_BASE_URL}/sales`).then((res) => res.json()),
+    mutationFn: (newSale: SaleFormData) =>
+      fetch(`${API_BASE_URL}/sales`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newSale),
+      }).then((res) => res.json()),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sales"] });
     },
   });
 
-  return { isPending, error, data, isSuccess };
+  return { mutate, isPending, error, data, isSuccess };
 }
 
 export function usePutSale() {
