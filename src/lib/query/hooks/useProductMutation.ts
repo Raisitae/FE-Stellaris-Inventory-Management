@@ -20,7 +20,7 @@ export function usePostProduct() {
   return { mutate, isPending, error, data, isSuccess };
 }
 
-export function usePathProduct() {
+export function usePatchProduct() {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, error, data, isSuccess } = useMutation({
