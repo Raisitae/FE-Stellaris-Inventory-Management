@@ -17,7 +17,7 @@ import { useLocation, useNavigate } from "@tanstack/react-router";
 import type { Platform } from "@/interfaces/platform";
 import type { ProductFormData } from "@/interfaces/product";
 import { useProductQuery } from "@/lib/query/hooks/useProductQuery";
-import { usePathProduct } from "@/lib/query/hooks/useProductMutation";
+import { usePatchProduct } from "@/lib/query/hooks/useProductMutation";
 
 export default function ProductEditForm() {
   const location = useLocation();
@@ -33,7 +33,7 @@ export default function ProductEditForm() {
   const { data: platformArray } = usePlatformsQuery();
   const { data: product, isLoading } = useProductQuery(id);
 
-  const { mutate: updateProduct, isSuccess, isPending } = usePathProduct();
+  const { mutate: updateProduct, isSuccess, isPending } = usePatchProduct();
 
   const [formData, setFormData] = useState<ProductFormData>({
     price: product?.price || 0,
@@ -144,18 +144,14 @@ export default function ProductEditForm() {
     }
   }, [isSuccess, id, navigate]);
 
-  if (isLoading) return <div>{t("loading", "Loading...")}</div>;
-  if (!product) return <div>{t("notFound", "Product not found")}</div>;
+  if (isLoading) return <div>{t("loading")}</div>;
+  if (!product) return <div>{t("notFound")}</div>;
 
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>
-          {t("editProduct", "Edita el producto seleccionado")}
-        </CardTitle>
-        <CardDescription>
-          {t("editProductDescription", "Edita el producto seleccionado")}
-        </CardDescription>
+        <CardTitle>{t("editProduct")}</CardTitle>
+        <CardDescription>{t("editProductDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">

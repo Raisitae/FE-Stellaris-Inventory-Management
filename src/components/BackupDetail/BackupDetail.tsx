@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useSalesQuery } from "@/lib/query/hooks/useSalesQuery";
 import { useProductsQuery } from "@/lib/query/hooks/useProductQuery";
+import { useTranslation } from "react-i18next";
 
 function arrayToCSV(data: unknown[], title: string): string {
   if (!data || data.length === 0) return "";
@@ -46,6 +47,7 @@ const BackupDetail: React.FC = () => {
     isLoading: loadingSales,
     error: errorSales,
   } = useSalesQuery();
+  const { t } = useTranslation("backup");
 
   const handleDownload = () => {
     let csvContent = "";
@@ -63,7 +65,7 @@ const BackupDetail: React.FC = () => {
   if (loadingProducts || loadingSales) {
     return (
       <div className="container mx-auto py-10 text-center">
-        Cargando datos para backup...
+        {t("backupLoading")}
       </div>
     );
   }
@@ -71,7 +73,7 @@ const BackupDetail: React.FC = () => {
   if (errorProducts || errorSales) {
     return (
       <div className="container mx-auto py-10 text-center text-red-500">
-        Error cargando productos o ventas.
+        {t("backupError")}
       </div>
     );
   }
@@ -81,17 +83,11 @@ const BackupDetail: React.FC = () => {
       <div className="flex flex-col items-center gap-6">
         <div className="w-full max-w-2xl bg-white rounded-lg shadow p-8">
           <h2 className="text-2xl font-bold mb-2 text-gray-900">
-            Backup de Inventario
+            {t("backupTitle")}
           </h2>
-          <p className="mb-6 text-gray-600">
-            Descarga un respaldo en CSV de todos tus productos y ventas
-            actuales. Puedes usar este archivo para restaurar tu inventario o
-            analizar tus datos fuera de la plataforma.
-          </p>
+          <p className="mb-6 text-gray-600">{t("backupDescription")}</p>
           <div className="flex justify-center">
-            <Button onClick={handleDownload}>
-              Descargar backup CSV de productos y ventas
-            </Button>
+            <Button onClick={handleDownload}>{t("backupDownload")}</Button>
           </div>
         </div>
       </div>

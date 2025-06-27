@@ -1,19 +1,11 @@
 {
   "welcome": "Bienvenido a Stellaris Inventory",
   "description": "Gestiona tu inventario con facilidad y eficiencia",
-  "products": {
-    "title": "Productos",
-    "description": "Ver y gestionar tu catálogo de productos",
-    "view": "Ver Productos"
-  },
-  "inventory": {
-    "title": "Inventario",
-    "description": "Seguimiento de niveles y movimientos de stock",
-    "view": "Ver Inventario"
-  },
-  "reports": {
-    "title": "Reportes",
-    "description": "Generar información y análisis",
-    "view": "Ver Reportes"
-  }
-} 
+  "getStarted": "Comenzar",
+  "feature1Title": "Seguimiento de Inventario",
+  "feature1Desc": "Administra tu inventario de manera eficiente y sencilla.",
+  "feature2Title": "Seguimiento de Ventas",
+  "feature2Desc": "Analiza tus ventas y toma decisiones informadas.",
+  "feature3Title": "Exportación de Datos",
+  "feature3Desc": "Exporta tus datos en formatos comunes como CSV y PDF para un análisis más profundo o informes profesionales."
+}

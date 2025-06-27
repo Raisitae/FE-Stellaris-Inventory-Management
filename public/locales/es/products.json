@@ -62,5 +62,10 @@
   "next": "Siguiente",
   "previous": "Anterior",
   "of": "de ",
-  "selectedRows": " fila(s) seleccionadas"
+  "selectedRows": " fila(s) seleccionadas",
+  "editProductDescription": "Edita el producto seleccionado",
+  "updating": "Actualizando...",
+  "update": "Actualizar producto",
+  "notFound": "Producto no encontrado",
+  "loading": "Cargando..."
 }

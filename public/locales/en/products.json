@@ -62,5 +62,10 @@
   "next": "Next",
   "previous": "Previous",
   "of": "of",
-  "selectedRows": "row(s) selected."
+  "selectedRows": "row(s) selected.",
+  "editProductDescription": "Edit the details of this product",
+  "updating": "Updating...",
+  "update": "Update Product",
+  "notFound": "Product not found",
+  "loading": "Loading products..."
 }

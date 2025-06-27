@@ -23,44 +23,29 @@ function Home() {
             to="/products"
             className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow-lg hover:from-blue-700 hover:to-purple-700 transition opacity-80"
             tabIndex={-1}>
-            {t("getStarted", "Get Started")}
+            {t("getStarted")}
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg  p-6 text-center border border-blue-200">
             <h2 className="text-2xl font-semibold mb-2 text-blue-700">
-              {t("feature1Title", "Seguimiento de Inventario")}
+              {t("feature1Title")}
             </h2>
-            <p className="text-gray-700">
-              {t(
-                "feature1Desc",
-                "Administra tu inventario de manera eficiente y sencilla."
-              )}
-            </p>
+            <p className="text-gray-700">{t("feature1Desc")}</p>
           </div>
 
           <div className="bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg p-6 text-center border border-purple-200">
             <h2 className="text-2xl font-semibold mb-2 text-purple-700">
-              {t("feature2Title", "Seguimiento de Ventas")}
+              {t("feature2Title")}
             </h2>
-            <p className="text-gray-700">
-              {t(
-                "feature2Desc",
-                "Analiza tus ventas y toma decisiones informadas."
-              )}
-            </p>
+            <p className="text-gray-700">{t("feature2Desc")}</p>
           </div>
 
           <div className="bg-gradient-to-br from-pink-100 to-pink-50 rounded-lg p-6 text-center border border-pink-200">
             <h2 className="text-2xl font-semibold mb-2 text-pink-700">
-              {t("feature3Title", "Exportación de Datos")}
+              {t("feature3Title")}
             </h2>
-            <p className="text-gray-700">
-              {t(
-                "feature3Desc",
-                "Exporta tus datos en formatos comunes como CSV y PDF para un análisis más profundo o informes profesionales."
-              )}
-            </p>
+            <p className="text-gray-700">{t("feature3Desc")}</p>
           </div>
         </div>
       </div>
