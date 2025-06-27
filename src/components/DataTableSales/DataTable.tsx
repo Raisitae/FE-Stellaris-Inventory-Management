@@ -24,7 +24,6 @@ import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { CardContent } from "../ui/card";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import type { Product } from "@/interfaces/product";
 import {
   Tooltip,
   TooltipContent,
@@ -32,12 +31,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { Sale } from "@/interfaces/sale";
-interface DataTableProps<TData extends Product, TValue> {
+interface DataTableProps<TData extends Sale, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData extends Product, TValue>({
+export function DataTable<TData extends Sale, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
