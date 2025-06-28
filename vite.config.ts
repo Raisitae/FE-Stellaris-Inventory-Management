@@ -1,6 +1,6 @@
 import path from "path";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
@@ -18,5 +18,17 @@ export default defineConfig({
   },
   server: {
     host: "0.0.0.0",
+  },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: ["node_modules", "src/setupTests.ts"],
+      all: true,
+    },
   },
 });

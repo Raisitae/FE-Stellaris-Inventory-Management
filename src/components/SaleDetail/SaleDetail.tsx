@@ -1,7 +1,6 @@
 import { useSaleWithProducts } from "@/lib/query/hooks/useProductQuery";
 import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
-//mport { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -18,12 +17,9 @@ const SaleDetail = () => {
   const location = useLocation();
   const trimmedPath = location.pathname.replace(/^\/sales\//, "");
   const id = trimmedPath.split("/")[0];
-  //const navigate = useNavigate();
 
   const { t } = useTranslation("sales");
-
   const { sale, products, error, isLoading } = useSaleWithProducts(id);
-
   const isError = error;
 
   if (isError) return <div>Error loading sale details.</div>;
