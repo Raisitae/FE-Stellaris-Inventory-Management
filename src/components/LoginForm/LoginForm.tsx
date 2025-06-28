@@ -14,8 +14,9 @@ import { Link } from "react-router-dom";
 
 export function LoginForm({
   className,
+  "data-testid": dataTestId = "login-form-component",
   ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+}: React.ComponentPropsWithoutRef<"div"> & { "data-testid"?: string }) {
   const { t } = useTranslation("login");
 
   return (
@@ -26,7 +27,7 @@ export function LoginForm({
           <CardDescription>{t("enterEmail")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form data-testid={`${dataTestId}.form`}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">{t("email")}</Label>
@@ -35,6 +36,7 @@ export function LoginForm({
                   type="email"
                   placeholder={t("placeholderEmail")}
                   required
+                  data-testid={`${dataTestId}.email.input`}
                 />
               </div>
               <div className="grid gap-2">
@@ -46,9 +48,17 @@ export function LoginForm({
                     {t("forgotPassword")}
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  data-testid={`${dataTestId}.password.input`}
+                />
               </div>
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full"
+                data-testid={`${dataTestId}.submit.button`}>
                 {t("signIn")}
               </Button>
             </div>
