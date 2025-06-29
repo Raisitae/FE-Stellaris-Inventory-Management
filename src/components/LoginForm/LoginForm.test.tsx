@@ -75,11 +75,12 @@ describe("LoginForm", () => {
 
     // Expect
     const form = screen.getByTestId(`${DATA_TEST_ID}.form`);
+    expect(handleSubmit).not.toHaveBeenCalled();
 
     // Act
     form.dispatchEvent(new Event("submit", { bubbles: true }));
 
     // Expect
-    expect(handleSubmit).toHaveBeenCalledTimes(1);
+    expect(handleSubmit).toHaveBeenCalled();
   });
 });

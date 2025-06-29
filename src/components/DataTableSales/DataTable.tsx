@@ -34,11 +34,13 @@ import type { Sale } from "@/interfaces/sale";
 interface DataTableProps<TData extends Sale, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  "data-testid"?: string;
 }
 
 export function DataTable<TData extends Sale, TValue>({
   columns,
   data,
+  "data-testid": dataTestId = "datatable-sale-component",
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const { t } = useTranslation("sales");
@@ -90,8 +92,14 @@ export function DataTable<TData extends Sale, TValue>({
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl font-bold">{t("title")}</CardTitle>
-              <CardDescription className="mt-1">
+              <CardTitle
+                data-testid={`${dataTestId}.title`}
+                className="text-2xl font-bold">
+                {t("title")}
+              </CardTitle>
+              <CardDescription
+                data-testid={`${dataTestId}.description`}
+                className="mt-1">
                 {t("description")}
               </CardDescription>
             </div>
@@ -158,6 +166,7 @@ export function DataTable<TData extends Sale, TValue>({
                 ) : (
                   <TableRow>
                     <TableCell
+                      data-testid={`${dataTestId}.noResults`}
                       colSpan={columns.length}
                       className="h-24 text-center">
                       {t("noResults")}.
@@ -175,6 +184,7 @@ export function DataTable<TData extends Sale, TValue>({
                 variant="default"
                 size="sm"
                 className="ml-2"
+                data-testid={`${dataTestId}.export.button`}
                 onClick={() =>
                   handleInvoiceSales(
                     table
