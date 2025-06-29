@@ -27,7 +27,10 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "json", "html"],
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["node_modules", "src/setupTests.ts"],
+      exclude: [
+        "node_modules",
+        "src/setupTests.ts, src/vite.config.ts, src/routeTree.gen.ts",
+      ],
       all: true,
     },
   },
