@@ -18,7 +18,9 @@ import type { Platform } from "@/interfaces/platform";
 import type { ProductFormData } from "@/interfaces/product";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductAddForm() {
+export default function ProductAddForm({
+  "data-testid": dataTestId = "product-add-form-component",
+}) {
   const { t } = useTranslation("products");
 
   const categoryArray = getCategoryArray(t);
@@ -136,10 +138,13 @@ export default function ProductAddForm() {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">{t("name")}</Label>
+            <Label data-testid={`${dataTestId}-name-label`} htmlFor="name">
+              {t("name")}
+            </Label>
             <Input
               id="name"
               name="name"
+              data-testid={`${dataTestId}-name-input`}
               value={formData.name}
               onChange={handleChange}
               placeholder={t("namePlaceholder")}
@@ -150,10 +155,13 @@ export default function ProductAddForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="price">{t("price")}</Label>
+            <Label data-testid={`${dataTestId}-price-label`} htmlFor="price">
+              {t("price")}
+            </Label>
             <Input
               id="price"
               name="price"
+              data-testid={`${dataTestId}-price-input`}
               type="number"
               step="0.01"
               min="0"
@@ -167,10 +175,13 @@ export default function ProductAddForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="stock">{t("stock")}</Label>
+            <Label data-testid={`${dataTestId}-stock-label`} htmlFor="stock">
+              {t("stock")}
+            </Label>
             <Input
               id="stock"
               name="stock"
+              data-testid={`${dataTestId}-stock-input`}
               type="number"
               step="0.01"
               min="0"
@@ -184,10 +195,15 @@ export default function ProductAddForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">{t("descriptionForm")}</Label>
+            <Label
+              data-testid={`${dataTestId}-description-label`}
+              htmlFor="description">
+              {t("descriptionForm")}
+            </Label>
             <Input
               id="description"
               name="description"
+              data-testid={`${dataTestId}-description-input`}
               value={formData.description}
               onChange={handleChange}
               placeholder={t("descriptionPlaceholder")}
@@ -200,10 +216,15 @@ export default function ProductAddForm() {
 
           {/* Category Select */}
           <div className="space-y-2">
-            <Label htmlFor="category">{t("category")}</Label>
+            <Label
+              data-testid={`${dataTestId}-category-label`}
+              htmlFor="category">
+              {t("category")}
+            </Label>
             <select
               id="category"
               name="category"
+              data-testid={`${dataTestId}-category-select`}
               value={formData.category}
               onChange={handleChange}
               className={`w-full border rounded px-2 py-1 ${
@@ -226,10 +247,15 @@ export default function ProductAddForm() {
 
           {/* Platform Select */}
           <div className="space-y-2">
-            <Label htmlFor="platform">{t("platform")}</Label>
+            <Label
+              data-testid={`${dataTestId}-platform-label`}
+              htmlFor="platform">
+              {t("platform")}
+            </Label>
             <select
               id="platformId"
               name="platformId"
+              data-testid={`${dataTestId}-platform-select`}
               value={formData.platformId}
               onChange={handleChange}
               className={`w-full border rounded px-2 py-1 ${
@@ -252,10 +278,13 @@ export default function ProductAddForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="status">{t("status")}</Label>
+            <Label data-testid={`${dataTestId}-status-label`} htmlFor="status">
+              {t("status")}
+            </Label>
             <select
               id="status"
               name="status"
+              data-testid={`${dataTestId}-status-select`}
               value={formData.status}
               onChange={handleChange}
               className={`w-full border rounded px-2 py-1 ${
@@ -276,10 +305,15 @@ export default function ProductAddForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="internCode">{t("internCode")}</Label>
+            <Label
+              data-testid={`${dataTestId}-internCode-label`}
+              htmlFor="internCode">
+              {t("internCode")}
+            </Label>
             <Input
               id="internCode"
               name="internCode"
+              data-testid={`${dataTestId}-internCode-input`}
               value={formData.internCode}
               onChange={handleChange}
               placeholder={t("internCodePlaceholder")}
@@ -289,7 +323,11 @@ export default function ProductAddForm() {
               <p className="text-sm text-red-500">{errors.internCode}</p>
             )}
           </div>
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button
+            data-testid={`${dataTestId}-button`}
+            type="submit"
+            className="w-full"
+            disabled={isPending}>
             {isPending ? t("adding") : t("add")}
           </Button>
         </form>
