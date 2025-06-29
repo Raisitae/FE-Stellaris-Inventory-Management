@@ -11,7 +11,12 @@ export function usePostSale() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newSale),
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error("Error creating sale");
+        }
+        return res.json();
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sales"] });
     },
@@ -29,7 +34,12 @@ export function usePutSale() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newSale),
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error("Error updating sale");
+        }
+        return res.json();
+      }),
     mutationKey: ["products"],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sales"] });

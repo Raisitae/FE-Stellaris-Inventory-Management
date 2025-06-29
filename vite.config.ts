@@ -35,6 +35,7 @@ export default defineConfig({
         "src/App.tsx",
         "src/main.tsx",
         "src/i18n.ts",
+        "src/routes",
       ],
       all: true,
     },

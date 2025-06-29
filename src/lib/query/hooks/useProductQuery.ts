@@ -9,7 +9,12 @@ export function useProductQuery(id: string) {
   const { isPending, isLoading, isSuccess, error, data } = useQuery<Product>({
     queryKey: ["product", id],
     queryFn: () =>
-      fetch(`${API_BASE_URL}/products/${id}`).then((res) => res.json()),
+      fetch(`${API_BASE_URL}/products/${id}`).then((res) => {
+        if (!res.ok) {
+          throw new Error("Error fetching product");
+        }
+        return res.json();
+      }),
     retry: 1, // Retry once on failure
     staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
     refetchOnMount: true,
@@ -27,7 +32,13 @@ export function useProductQuery(id: string) {
 export function useProductsQuery() {
   const { isPending, isLoading, error, data } = useQuery<Product>({
     queryKey: ["products"],
-    queryFn: () => fetch(`${API_BASE_URL}/products`).then((res) => res.json()),
+    queryFn: () =>
+      fetch(`${API_BASE_URL}/products`).then((res) => {
+        if (!res.ok) {
+          throw new Error("Error fetching products");
+        }
+        return res.json();
+      }),
     retry: 1, // Retry once on failure
     staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
   });
@@ -55,9 +66,12 @@ export function useProductsByIds(
     queries: ids.map((productId: string) => ({
       queryKey: ["product", productId],
       queryFn: () =>
-        fetch(`${API_BASE_URL}/products/${productId}`).then((res) =>
-          res.json()
-        ),
+        fetch(`${API_BASE_URL}/products/${productId}`).then((res) => {
+          if (!res.ok) {
+            throw new Error(`Error fetching product with id ${productId}`);
+          }
+          return res.json();
+        }),
       enabled: enabled && ids.length > 0,
       retry: 1,
       staleTime: 1000 * 60 * 5,
