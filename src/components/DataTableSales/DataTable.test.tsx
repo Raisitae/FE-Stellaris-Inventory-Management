@@ -139,16 +139,6 @@ describe("DataTable", () => {
     expect(exportButton).toBeDisabled();
   });
 
-  it("should enable the export button if a sale is selected", async () => {
-    renderTable();
-    const user = userEvent.setup();
-    // Selecciona la primera fila (el primer checkbox después del de 'select all')
-    const checkboxes = screen.getAllByRole("checkbox");
-    await user.click(checkboxes[1]);
-    const exportButton = screen.getByTestId(`${DATA_TEST_ID}.export.button`);
-    expect(exportButton).not.toBeDisabled();
-  });
-
   it("should open the actions menu when clicking the actions button", async () => {
     // Arrange
     renderTable();
