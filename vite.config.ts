@@ -29,7 +29,10 @@ export default defineConfig({
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
         "node_modules",
-        "src/setupTests.ts, src/vite.config.ts, src/routeTree.gen.ts",
+        "src/setupTests.ts",
+        "src/vite.config.ts",
+        "src/routeTree.gen.ts",
+        "src/App.tsx",
       ],
       all: true,
     },
