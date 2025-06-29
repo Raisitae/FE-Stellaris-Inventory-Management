@@ -1,5 +1,6 @@
 export interface Sale {
   _id: string;
+  clientName: string;
   date: Date;
   total: number;
   products: SaleItem[];
