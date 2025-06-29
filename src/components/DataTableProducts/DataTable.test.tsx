@@ -105,6 +105,4 @@ describe("DataTableProducts", () => {
     });
     expect(createSaleButton).toBeDisabled();
   });
-
-  // Puedes agregar más tests para selección de filas y paginación si tu tabla lo soporta
 });

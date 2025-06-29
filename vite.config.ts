@@ -33,6 +33,8 @@ export default defineConfig({
         "src/vite.config.ts",
         "src/routeTree.gen.ts",
         "src/App.tsx",
+        "src/main.tsx",
+        "src/i18n.ts",
       ],
       all: true,
     },
