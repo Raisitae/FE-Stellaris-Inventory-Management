@@ -36,7 +36,13 @@ function downloadCSV(filename: string, csvContent: string) {
   URL.revokeObjectURL(url);
 }
 
-const BackupDetail: React.FC = () => {
+interface BackupDetailProps {
+  "data-testid"?: string;
+}
+
+const BackupDetail: React.FC<BackupDetailProps> = ({
+  "data-testid": dataTestId = "backup-detail-component",
+}) => {
   const {
     data: products,
     isLoading: loadingProducts,
@@ -82,12 +88,22 @@ const BackupDetail: React.FC = () => {
     <div className="container mx-auto py-10">
       <div className="flex flex-col items-center gap-6">
         <div className="w-full max-w-2xl bg-white rounded-lg shadow p-8">
-          <h2 className="text-2xl font-bold mb-2 text-gray-900">
+          <h2
+            data-testid={`${dataTestId}-title`}
+            className="text-2xl font-bold mb-2 text-gray-900">
             {t("backupTitle")}
           </h2>
-          <p className="mb-6 text-gray-600">{t("backupDescription")}</p>
+          <p
+            data-testid={`${dataTestId}-description`}
+            className="mb-6 text-gray-600">
+            {t("backupDescription")}
+          </p>
           <div className="flex justify-center">
-            <Button onClick={handleDownload}>{t("backupDownload")}</Button>
+            <Button
+              data-testid={`${dataTestId}-button`}
+              onClick={handleDownload}>
+              {t("backupDownload")}
+            </Button>
           </div>
         </div>
       </div>
